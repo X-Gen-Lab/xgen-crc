@@ -1,0 +1,37 @@
+@PACKAGE_INIT@
+
+set(xgen_crc_VERSION "@PROJECT_VERSION@")
+set(_xgcrc_available_components "@XGCRC_COMPONENTS@")
+set(_xgcrc_requested_components "${xgen_crc_FIND_COMPONENTS}")
+if(NOT _xgcrc_requested_components)
+    set(_xgcrc_requested_components "${_xgcrc_available_components}")
+endif()
+
+foreach(_xgcrc_component IN LISTS _xgcrc_requested_components)
+    set(xgen_crc_${_xgcrc_component}_FOUND FALSE)
+    if(NOT _xgcrc_component IN_LIST _xgcrc_available_components)
+        set(xgen_crc_NOT_FOUND_MESSAGE
+            "xgen-crc component '${_xgcrc_component}' is not installed; available: ${_xgcrc_available_components}")
+        continue()
+    endif()
+    if(NOT TARGET xgcrc::${_xgcrc_component})
+        include("${CMAKE_CURRENT_LIST_DIR}/xgenCrc-${_xgcrc_component}-targets.cmake")
+    endif()
+    get_target_property(_xgcrc_version xgcrc::${_xgcrc_component} XGCRC_VERSION)
+    get_target_property(_xgcrc_abi xgcrc::${_xgcrc_component} XGCRC_ABI_VERSION)
+    if(NOT _xgcrc_version VERSION_EQUAL "@PROJECT_VERSION@" OR
+       NOT _xgcrc_abi STREQUAL "1")
+        set(xgen_crc_NOT_FOUND_MESSAGE
+            "xgcrc::${_xgcrc_component} has incompatible version/ABI '${_xgcrc_version}/${_xgcrc_abi}'")
+        set(xgen_crc_FOUND FALSE)
+        return()
+    endif()
+    set(xgen_crc_${_xgcrc_component}_FOUND TRUE)
+endforeach()
+check_required_components(xgen_crc)
+
+unset(_xgcrc_available_components)
+unset(_xgcrc_requested_components)
+unset(_xgcrc_component)
+unset(_xgcrc_version)
+unset(_xgcrc_abi)

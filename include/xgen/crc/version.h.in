@@ -1,0 +1,21 @@
+/**
+ * \file            version.h
+ * \brief           Generated xgen-crc source and ABI version definitions
+ * \author          X-Gen Lab
+ */
+
+#ifndef XGCRC_VERSION_H
+#define XGCRC_VERSION_H
+
+/** \brief           Source release major version. */
+#define XGCRC_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+/** \brief           Source release minor version. */
+#define XGCRC_VERSION_MINOR @PROJECT_VERSION_MINOR@
+/** \brief           Source release patch version. */
+#define XGCRC_VERSION_PATCH @PROJECT_VERSION_PATCH@
+/** \brief           Source release string. */
+#define XGCRC_VERSION_STRING "@PROJECT_VERSION@"
+/** \brief           Public C interface ABI version. */
+#define XGCRC_ABI_VERSION 1
+
+#endif
