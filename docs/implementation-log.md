@@ -82,6 +82,14 @@
 
 pre-commit 4.3.0 已安装在本地仓库，配置使用显式准备的工具环境。`python -m pre_commit run --all-files` 的文本/配置与 Nexus C/C++ 格式两项均通过；`git diff --cached --check` 通过。
 
+## 提交与干净克隆验证
+
+完整实现提交为 `a0ed09ee329100b7182a77f8c84960898bf426cd`。从该提交创建独立本地克隆，源码和构建位于包含空格的新路径中；未复制 `out`、GoogleTest 或开发缓存。
+
+显式将环境中的 `CXX` 指向不存在的路径后，C11 Release 配置、构建、安装及独立 CRC8 安装消费者的构建和执行全部通过。生产 CMake 缓存没有 C++ 编译器或 GoogleTest 条目。命令与输出见 `out/reports/clean-checkout.json`，证明已提交的生产包不依赖当前开发目录中的未跟踪文件。
+
+原始构建和分析产物位于被 Git 忽略的 `out`，本文保留提交、命令、关键结果及失败说明。CI 配置会上传报告；本轮未声称这些本地日志已上传远端。
+
 ## 交付边界
 
 - 本地版本为 0.1.0，没有创建远端、tag 或 release。
