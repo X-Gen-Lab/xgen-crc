@@ -7,4 +7,4 @@
 - C/C++ 主机测试使用 GoogleTest；工具自身使用 Python unittest。不要复制被测算法来计算期望值。
 - 依赖获取是显式准备操作，配置、编译和测试不隐式下载。
 - 本地检查、远端 CI、发布与硬件结果分别记录；当前没有明确源码许可证，不擅自套用 MIT 等授权。
-- 本地、pre-commit 和 CI 调用 tools/quality.py；工具失败不得被吞掉。
+- 本地、pre-commit 和 CI 调用 tools/quality.py 薄入口；规则、回归与工具版本只在 xgen-quality 维护，工具失败不得被吞掉。
