@@ -77,6 +77,6 @@ python tools/quality.py coverage --build-dir out/coverage
 
 记录行为基线、RED/GREEN、安装消费、工具版本及实际结果。CI 配置的 Linux/MSVC 矩阵需要由远端执行后才能标记通过；本地 GCC 验证不能替代它。没有板级测量时不声明 MCU 时序或完整 Boot 资源已通过。
 
-启用远端 CI 前，将仓库变量 `XGEN_QUALITY_REPOSITORY` 设置为真实可读取的共享工具仓库 `owner/repository`。CI 使用本仓配置中的固定提交，不跟随工具主分支；地址未设置、提交不可获取或安装版本不匹配都会失败。当前共享工具只有本地仓库，此准备项与远端 CI 均待后续发布任务完成。
+CI 显式从 `X-Gen-Lab/xgen-quality` 获取配置中固定的工具提交，允许用 `XGEN_QUALITY_REPOSITORY` 覆盖为受控镜像。仓库覆盖、固定提交不可获取或安装版本不符时失败；不跟随依赖主分支，远端验证与本地结果分别记录。
 
-本仓库尚未配置远端，也未完成源码授权确认；本地版本号不等同于公开发布。现有 core/link 消费者尚未切换，本次不删除它们的来源实现。
+源码已推送到对应 GitHub 仓库 main，源代码授权与正式版本发布仍按来源记录处理。历史提取和消费者迁移验收见实施记录。
