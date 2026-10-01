@@ -56,7 +56,7 @@ python -m pre_commit run --all-files
 
 `text` 和 `format` 可追加文件名；提交钩子传入暂存文件，本地全量检查与 CI 使用同一选择和检查逻辑。格式检查只读，不自动暂存或修改代码。主动格式修复使用固定版本 `clang-format -i`，之后审阅差异。
 
-共享工具版本、默认扫描规则和覆盖率门槛在 xgen-quality 包内维护，`tools/quality.json` 声明本仓采用版本及公开头、生产源码范围。`XGEN_CLANG_FORMAT`、`XGEN_CLANG_TIDY`、`XGEN_CPPCHECK`、`XGEN_DOXYGEN`、`XGEN_GCOVR` 可以指定实际工具路径；指定路径也必须通过版本检查。不要让 PATH 中的 Keil formatter 替代 Nexus 基线所用版本。
+共享工具版本、默认扫描规则和覆盖率门槛在 xgen-quality 包内维护，`tools/quality.json` 声明本仓采用版本及公开头、生产源码范围。`XGEN_CLANG_FORMAT`、`XGEN_CLANG_TIDY`、`XGEN_CPPCHECK`、`XGEN_DOXYGEN`、`XGEN_GCOVR` 可以指定实际工具路径；指定路径也必须通过版本检查。不要让 PATH 中的 Keil formatter 替代 X-Gen 基线所用版本。
 
 检查报告位于 `out/reports`，缺工具、版本不符、规则违规、空的必需测试集、漏跑或跳过测试均返回失败。公开头必须有 Doxygen 文件注释，避免未声明文档文件导致全局 API 被静默忽略；参数等细节继续由严格 Doxygen 验证。工具的 Python unittest 已随实现迁往 xgen-quality，不再在 CRC 维护第二套回归。
 

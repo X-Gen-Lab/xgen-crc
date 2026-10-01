@@ -17,7 +17,7 @@
 ## 来源基线
 
 - core 来源提交：`dc5eb1167ba21de384e7a760a8586b87502b73b2`，工作区干净。
-- 规范来源：roadmap `c018272a1bfa0a0ad0e811ceedcb22862640ed98`，工程规范 1.0.0，Nexus 格式基线。
+- 规范来源：roadmap `c018272a1bfa0a0ad0e811ceedcb22862640ed98`，工程规范 1.0.0，X-Gen 格式基线。
 - Windows / GCC 13.2.0 / CMake 4.2.3 / Ninja 1.12.1：在 `out/source-baseline` 构建原 `xgc_tests`，执行 `ctest --test-dir out/source-baseline -R '^xgc_crc$' --no-tests=error --output-on-failure`，1/1 通过。
 - CRC 生产实现按保持行为的提取处理；未故意修改算法制造失败。
 
@@ -45,7 +45,7 @@
 | C/C++ 头自包含 | 公开 CRC 头和生成版本头分别编译通过 |
 | 纯 C Release | 配置和构建通过，不启用 C++ 或 GoogleTest |
 | 最小符号检查 | 每个生产库仅导出本算法两个函数，无 core、堆或 GoogleTest 未定义符号 |
-| Nexus 格式 | clang-format 19.1.5 通过；格式与 EditorConfig 快照逐字节等于规范模板 |
+| X-Gen 格式 | clang-format 19.1.5 通过；格式与 EditorConfig 快照逐字节等于规范模板 |
 | 静态分析 | Cppcheck 2.21.0、clang-tidy 19.1.0 对真实生产编译数据库检查通过 |
 | API 文档 | Doxygen 1.16.0 严格检查通过 |
 | 覆盖率 | gcovr 8.3：行 17/17、函数 4/4、分支 8/8，分别为 100% |
@@ -68,7 +68,7 @@
 
 | 输入 | 预期阻断原因 |
 | --- | --- |
-| 不符合 Nexus 的 C 排版 | clang-format 格式错误 |
+| 不符合 X-Gen 的 C 排版 | clang-format 格式错误 |
 | 指定不存在的 formatter | 工具无法启动 |
 | CTest 标签选不到用例 | 必需测试集为空 |
 | CTest 用例全部跳过 | JUnit 包含 skipped |
@@ -80,7 +80,7 @@
 
 原始报告与工具诊断保存于 `out/reports/negative-cli.json`。Doxygen 诊断在其 `warnings.log` 中，失败退出仍由 runner 向上传播。工具版本不匹配、超时、缺失用例、禁用用例及报告缺失另由 Python 回归测试覆盖。
 
-pre-commit 4.3.0 已安装在本地仓库，配置使用显式准备的工具环境。`python -m pre_commit run --all-files` 的文本/配置与 Nexus C/C++ 格式两项均通过；`git diff --cached --check` 通过。
+pre-commit 4.3.0 已安装在本地仓库，配置使用显式准备的工具环境。`python -m pre_commit run --all-files` 的文本/配置与 X-Gen C/C++ 格式两项均通过；`git diff --cached --check` 通过。
 
 ## 提交与干净克隆验证
 
@@ -105,7 +105,7 @@ pre-commit 4.3.0 已安装在本地仓库，配置使用显式准备的工具环
 
 Windows 本地实际完成 text、clang-format 19.1.5、Doxygen 1.16.0、cppcheck 2.21.0、clang-tidy 19.1.0、CTest 与 gcovr 8.3 检查，全部通过。原始结果在 `out/reports/quality-*.json`；工具自身的 66 项 Python 回归在 xgen-quality 执行，组件不再复制这套测试。实现阶段的报告保留当时源码和安装身份；最终 wheel 更新了模板与元数据，运行 Python 和 policy 内容已逐字节核对为受测版本。
 
-已安装本地 pre-commit 钩子；暂存完整自有文件后运行 `python -m pre_commit run --all-files`，文本/配置与 Nexus C/C++ 格式两项通过，`git diff --cached --check` 通过。三个消费者固定到同一工具提交。远端 CI 仍需真实可读取的工具仓库及 `XGEN_QUALITY_REPOSITORY` 变量，当前未执行。
+已安装本地 pre-commit 钩子；暂存完整自有文件后运行 `python -m pre_commit run --all-files`，文本/配置与 X-Gen C/C++ 格式两项通过，`git diff --cached --check` 通过。三个消费者固定到同一工具提交。远端 CI 仍需真实可读取的工具仓库及 `XGEN_QUALITY_REPOSITORY` 变量，当前未执行。
 
 共享 runner 运行最终 22/22 CTest 通过；自有生产对象的行、函数与分支覆盖率均为 100%。独立虚拟环境的固定依赖安装及 pip check 通过。
 
